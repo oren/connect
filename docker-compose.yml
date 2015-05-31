@@ -4,5 +4,14 @@ app:
    - "3000:3000"
   volumes:
    - .:/src
-  command: "nv server"
+  links:
+   - redis
+  # command: "bin/nv serve"
+  entrypoint: "bin/nv"
+  restart: always
+
+redis:
+  build: ./redis
+  ports:
+   - "6379:6379"
   restart: always

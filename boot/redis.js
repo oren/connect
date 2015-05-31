@@ -1,13 +1,16 @@
 var URL   = require('url')
-  , redis = require('redis');
+  , redis = require('redis'),
+    process = require('process');
 
 module.exports = function (config) {
-  var client, url, port, host, db, pass;
+
+  var client, dockerRedis, url, port, host, db, pass;
+  dockerRedis = process.env.REDIS_PORT;
 
   if (config = config || {}) {
     try {
 
-      url     = URL.parse(config && config.url || 'redis://localhost:6379');
+      url     = URL.parse(config && config.url || dockerRedis || 'redis://localhost:6379');
       port    = url.port;
       host    = url.hostname;
       db      = config.db;
